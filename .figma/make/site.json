@@ -1,0 +1,11 @@
+{
+  "title": "Terraviva",
+  "description": "Explore an infinite 2D pixel art world to restore ecosystems by planting trees, cleaning pollution, and learning about environmental care through missions and dynamic gameplay.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

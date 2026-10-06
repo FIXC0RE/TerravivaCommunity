@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap');
+@import 'tailwindcss';
+
+:root {
+  font-family: "Nunito", system-ui, sans-serif;
+  color: #f8f5dc;
+  background: #162f2a;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+button { font: inherit; }
+
+.game-shell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background: #4c8a4d;
+  user-select: none;
+  touch-action: none;
+}
+
+.game-canvas { width: 100%; height: 100%; display: block; }
+
+.pixel-panel {
+  border: 1px solid rgba(225, 231, 190, .52);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(30, 68, 57, .93), rgba(18, 48, 42, .9));
+  box-shadow: inset 0 1px rgba(255,255,255,.08), 0 8px 26px rgba(8, 29, 23, .2);
+  backdrop-filter: blur(8px);
+}
+
+.top-hud {
+  position: absolute;
+  z-index: 4;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.brand-card { display: flex; align-items: center; gap: 10px; padding: 8px 13px 8px 10px; }
+.brand-card div { display: flex; flex-direction: column; line-height: .9; letter-spacing: .06em; font-family: "Nunito", sans-serif; }
+.brand-card strong { font-size: 15px; color: #fff8c4; }
+.brand-card small { margin-top: 4px; color: #9dcc65; font-size: 10px; font-weight: 800; letter-spacing: .2em; }
+.brand-mark { position: relative; width: 32px; height: 32px; display: block; border-radius: 50% 50% 45% 45%; background: #e8d058; box-shadow: inset -4px -3px #bd9e3e; }
+.brand-mark::before, .brand-mark::after { content: ""; position: absolute; width: 12px; height: 17px; background: #52a94e; border: 3px solid #173d30; border-radius: 12px 2px 12px 2px; transform: rotate(-24deg); top: -7px; left: 3px; }
+.brand-mark::after { left: 17px; transform: scaleX(-1) rotate(-24deg); }
+.brand-mark i { position: absolute; width: 14px; height: 5px; border-left: 3px solid #244331; border-bottom: 3px solid #244331; border-radius: 50%; left: 9px; top: 17px; }
+
+.world-card { position: absolute; left: 50%; transform: translateX(-50%); min-width: 190px; padding: 8px 15px; text-align: center; font-family: "Nunito", sans-serif; }
+.world-card div { font-size: 13px; font-weight: 700; color: #fff8d0; }
+.world-card > span { display: block; color: #bad6b2; font-size: 11px; margin-top: 2px; }
+.status-dot { display: inline-block; width: 7px; height: 7px; background: #a7d766; border-radius: 50%; margin-right: 7px; box-shadow: 0 0 0 2px #325a43; }
+
+.health-card { width: 230px; padding: 9px 12px 11px; }
+.health-card > div:first-child { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
+.health-card strong { color: #d8ed77; font-size: 13px; }
+.health-track, .mission-progress { height: 7px; border: 0; border-radius: 20px; overflow: hidden; background: #102e29; margin-top: 6px; box-shadow: inset 0 1px 2px rgba(0,0,0,.4); }
+.health-track i, .mission-progress i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #d8d354, #70bd4d); box-shadow: inset 0 1px rgba(255,255,255,.35); transition: width .3s; }
+
+.mission-card { position: absolute; z-index: 4; top: 90px; left: 16px; width: 206px; padding: 12px 14px; }
+.eyebrow { display: block; color: #a7cf6d; font-family: "Chakra Petch", sans-serif; font-size: 9px; font-weight: 800; letter-spacing: .17em; }
+.mission-card strong { display: block; margin-top: 4px; color: #fff8d7; font-size: 13px; }
+.mission-card small { display: block; color: #a9c6ae; font-size: 10px; text-align: right; margin-top: 3px; }
+.mission-progress { margin-top: 8px; }
+
+.quick-menu { position: absolute; z-index: 4; top: 90px; right: 16px; display: flex; flex-direction: column; gap: 6px; }
+.quick-menu button {
+  display: flex;
+  align-items: center;
+  width: 138px;
+  height: 37px;
+  border: 1px solid rgba(220, 226, 184, .58);
+  border-radius: 11px;
+  color: #f5f0d4;
+  background: rgba(20, 55, 47, .94);
+  box-shadow: 0 6px 16px rgba(9, 33, 27, .18);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  text-align: left;
+}
+.quick-menu button:hover { background: #2b6956; transform: translateY(-1px); }
+.quick-menu button > span { width: 18px; height: 18px; margin: 0 9px; display: inline-block; position: relative; }
+.quick-menu kbd { margin-left: auto; margin-right: 6px; color: #8eb49d; font: 9px "Chakra Petch"; }
+.bag-icon { border: 2px solid #b7d06f; border-radius: 2px 2px 5px 5px; }
+.bag-icon::before { content: ""; position: absolute; width: 8px; height: 5px; border: 2px solid #b7d06f; border-bottom: 0; left: 3px; top: -5px; }
+.map-icon { border: 2px solid #7bc0b3; transform: skewY(-8deg); }
+.map-icon::before, .map-icon::after { content: ""; position: absolute; height: 14px; border-left: 2px solid #7bc0b3; left: 5px; top: 0; }
+.map-icon::after { left: 10px; }
+.book-icon { border: 2px solid #e0bf65; border-radius: 1px; }
+.book-icon::before { content: ""; position: absolute; height: 14px; border-left: 2px solid #e0bf65; left: 7px; top: 0; }
+
+.toast { position: absolute; z-index: 6; left: 50%; bottom: 118px; transform: translateX(-50%); max-width: min(440px, 80vw); padding: 10px 18px; color: #fff7d5; font-size: 12px; text-align: center; animation: toast-in .2s ease-out; }
+@keyframes toast-in { from { opacity: 0; transform: translate(-50%, 8px); } }
+.fact-card { position: absolute; z-index: 3; bottom: 42px; left: 50%; transform: translateX(-50%); width: min(380px, 44vw); padding: 9px 14px; pointer-events: none; }
+.fact-card span { float: left; margin-right: 9px; color: #d7db70; font: 800 9px "Chakra Petch"; letter-spacing: .1em; }
+.fact-card p { margin: 0; color: #c6d9c4; font-size: 10px; line-height: 1.35; }
+
+.joystick { display: none; position: absolute; z-index: 5; bottom: 27px; left: 28px; width: 92px; height: 92px; border: 3px solid rgba(225, 217, 159, .65); border-radius: 50%; background: rgba(18, 47, 42, .55); box-shadow: inset 0 0 0 10px rgba(0,0,0,.09); }
+.joystick::before, .joystick::after { content: ""; position: absolute; background: rgba(225, 217, 159, .17); left: 43px; top: 7px; width: 2px; height: 72px; }
+.joystick::after { transform: rotate(90deg); }
+.joystick i { position: absolute; left: 28px; top: 28px; width: 31px; height: 31px; border-radius: 50%; background: #d9d077; border: 3px solid #264e40; box-shadow: 0 3px #102e28; transform: translate(var(--stick-x, 0), var(--stick-y, 0)); }
+
+.action-controls { display: none; position: absolute; z-index: 5; right: 22px; bottom: 24px; align-items: flex-end; gap: 12px; }
+.action-controls button { position: relative; border: 3px solid #234d40; color: #173c31; font-weight: 900; text-transform: uppercase; box-shadow: 0 4px 0 #17382f; cursor: pointer; }
+.action-controls button small { position: absolute; top: 4px; right: 6px; font: 8px "Chakra Petch"; opacity: .55; }
+.action-button { width: 78px; height: 78px; border-radius: 50%; background: #e7d65c; font-size: 10px; }
+.action-button > span { display: block; margin: auto auto 2px; width: 21px; height: 21px; border: 3px solid #34513c; border-radius: 50%; font-size: 13px; line-height: 15px; }
+.tool-button { width: 62px; height: 62px; border-radius: 50%; background: #a7cc76; font-size: 8px; }
+.tool-symbol { display: block; width: 18px; height: 18px; margin: 1px auto 2px; border: 3px solid #315442; border-radius: 50% 2px 50% 2px; transform: rotate(-20deg); }
+.tool-symbol.manos { border-radius: 8px 8px 4px 4px; border-width: 4px 3px; }
+.tool-symbol.limpieza { border-radius: 2px; transform: rotate(45deg); }
+
+.desktop-help { position: absolute; z-index: 3; left: 14px; bottom: 10px; color: rgba(248,245,220,.78); font: 9px "Chakra Petch"; text-shadow: 0 1px 2px #15352e; }
+.desktop-help i { display: inline-block; width: 3px; height: 3px; margin: 0 8px 2px; border-radius: 50%; background: #bfce78; }
+
+.modal-backdrop { position: absolute; z-index: 20; inset: 0; display: grid; place-items: center; background: rgba(8,27,24,.58); backdrop-filter: blur(2px); padding: 16px; }
+.game-modal { position: relative; width: min(480px, 94vw); max-height: 84vh; overflow: auto; padding: 24px; }
+.game-modal h2 { margin: 3px 0 18px; color: #fff9d3; font: 700 25px "Chakra Petch"; }
+.close-button { position: absolute; top: 10px; right: 12px; width: 30px; height: 30px; border: 1px solid #6e9278; border-radius: 50%; background: #173b33; color: #e8e2bc; font-size: 22px; line-height: 20px; cursor: pointer; }
+.inventory-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.inventory-grid article { min-height: 108px; display: grid; grid-template-columns: 44px 1fr; grid-template-rows: 1fr 1fr; align-items: end; padding: 13px; border: 1px solid #567c64; background: rgba(10,38,32,.48); }
+.inventory-grid article > span { grid-row: 1 / 3; width: 32px; height: 32px; display: block; }
+.inventory-grid strong { color: #e5df78; font: 700 22px "Chakra Petch"; }
+.inventory-grid small { align-self: start; color: #afc8ae; font-size: 10px; }
+.seed-art { border-radius: 50% 3px 50% 3px; background: #8fbb4d; box-shadow: 8px -6px #d2b64d; transform: scale(.65) rotate(-20deg); }
+.trash-art { border: 5px solid #94afaa; border-top-color: #e8d967; transform: rotate(8deg) scale(.7); }
+.sample-art { border: 4px solid #69ab9c; border-radius: 50%; box-shadow: inset 0 0 0 3px #153b33; }
+.tool-art { background: #bdc5aa; clip-path: polygon(38% 0,62% 0,62% 63%,100% 80%,86% 100%,51% 75%,18% 100%,0 78%,38% 61%); }
+.modal-note, .empty-state { color: #b8cdb9; font-size: 12px; line-height: 1.5; margin: 16px 0 0; }
+.species-list { display: flex; flex-wrap: wrap; gap: 7px; }
+.species-list span { padding: 7px 10px; border: 1px solid #5d8268; background: #183d34; color: #dce5bd; font-size: 11px; }
+.stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-top: 20px; }
+.stats-row div { padding: 12px 5px; text-align: center; border: 1px solid #547760; background: #16382f; }
+.stats-row strong { display: block; color: #dbe073; font: 700 20px "Chakra Petch"; }
+.stats-row small { color: #a8c0aa; font-size: 9px; }
+.mini-map { position: relative; display: grid; grid-template-columns: repeat(9, 1fr); aspect-ratio: 1.75; overflow: hidden; border: 4px solid #132f2a; background: #132f2a; }
+.mini-map i { display: block; opacity: .9; border: 1px solid rgba(255,255,255,.03); }
+.map-player { position: absolute; width: 12px; height: 12px; left: calc(50% - 6px); top: calc(50% - 6px); border: 3px solid #fff5aa; background: #275544; transform: rotate(45deg); box-shadow: 0 0 0 2px rgba(20,50,40,.7); }
+
+@media (pointer: coarse), (max-width: 760px) {
+  .joystick, .action-controls { display: flex; }
+  .desktop-help, .fact-card { display: none; }
+  .top-hud { top: 8px; left: 8px; right: 8px; }
+  .brand-card { padding: 6px; }
+  .brand-card div { display: none; }
+  .brand-mark { transform: scale(.85); }
+  .health-card { width: 155px; padding: 7px 9px 9px; }
+  .health-card > div:first-child { font-size: 8px; }
+  .world-card { top: 48px; min-width: 150px; padding: 5px 10px; }
+  .world-card div { font-size: 11px; }
+  .world-card > span { font-size: 9px; }
+  .mission-card { top: 80px; left: 8px; width: 168px; padding: 9px 10px; }
+  .mission-card strong { font-size: 11px; }
+  .quick-menu { top: 80px; right: 8px; }
+  .quick-menu button { width: 38px; height: 35px; overflow: hidden; color: transparent; }
+  .quick-menu button > span { flex: 0 0 18px; margin: 0 8px; }
+  .quick-menu kbd { display: none; }
+  .toast { bottom: 126px; font-size: 11px; }
+}
+
+@media (max-height: 520px) {
+  .mission-card { display: none; }
+  .quick-menu { top: 62px; }
+  .joystick { bottom: 14px; }
+  .action-controls { bottom: 12px; }
+}
+
+@media (max-width: 470px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
